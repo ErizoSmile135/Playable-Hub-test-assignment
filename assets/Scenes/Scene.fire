@@ -823,7 +823,7 @@
       "__id__": 15
     },
     "_enabled": true,
-    "moveSpeed": 500,
+    "moveSpeed": 300,
     "fallSpeed": 1000,
     "_id": "4egdjKotlIKrxD+A0U27Ai"
   },
@@ -1212,7 +1212,7 @@
     },
     "moveScoreDistance": 30,
     "moveScoreSpeed": 300,
-    "bkgSpeed": 5,
+    "bkgSpeed": 9,
     "blocker": {
       "__id__": 23
     },

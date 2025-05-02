@@ -48,7 +48,7 @@ export default class GameCtrl extends cc.Component {
     @property
     private moveScoreSpeed: number = 300;
     @property
-    private bkgSpeed: number = 5;
+    private bkgSpeed: number = 9;
 
     @property(cc.Node)
     blocker: cc.Node = null;
@@ -190,15 +190,6 @@ export default class GameCtrl extends cc.Component {
     }
 
     moveBackground(distance: number, moveSpeed: number){
-        /*if(this.background1.x + this.background1.width < this.camera.getCamera().x - this.screenWidth/2)
-            this.background1.x += this.background1.width * 2;
-
-        if(this.background2.x + this.background2.width < this.camera.getCamera().x - this.screenWidth/2)
-            this.background2.x += this.background2.width * 2;
-
-        cc.tween(this.background1)
-            .to(distance/moveSpeed, { x: this.screenWidth/this.bkgSpeed }, { easing: 'linear' }) 
-            .start();*/
         if(this.background1.x <= -this.background1.width)
             this.background1.x = this.background2.x + this.background1.width;
     
@@ -206,11 +197,11 @@ export default class GameCtrl extends cc.Component {
             this.background2.x = this.background1.x + this.background2.width;
         
         cc.tween(this.background1)
-            .to(distance/moveSpeed, { x: this.background1.x-distance/this.bkgSpeed }, { easing: 'linear' }) 
+            .to(distance/moveSpeed, { x: this.background1.x-distance/this.bkgSpeed }, { easing: 'quadOut' }) 
             .start();
 
         cc.tween(this.background2)
-            .to(distance/moveSpeed, { x: this.background2.x-distance/this.bkgSpeed }, { easing: 'linear' }) 
+            .to(distance/moveSpeed, { x: this.background2.x-distance/this.bkgSpeed }, { easing: 'quadOut' }) 
             .start();   
     }
     

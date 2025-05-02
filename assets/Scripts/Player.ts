@@ -11,7 +11,7 @@ export default class Player extends cc.Component {
     private startPositionY: number;
 
     @property
-    public moveSpeed: number = 500; 
+    public moveSpeed: number = 300; 
     @property
     public fallSpeed: number = 1000; 
 
