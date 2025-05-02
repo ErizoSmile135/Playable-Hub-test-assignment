@@ -30,6 +30,10 @@ export default class GameCtrl extends cc.Component {
     public retry: RetryMenu = null;
     @property (Camera)
     public camera: Camera = null;
+    @property (cc.Node)
+    public background1: cc.Node = null;
+    @property (cc.Node)
+    public background2: cc.Node = null;
 
     @property(cc.Label)
     public scoreLabel: cc.Label = null;
@@ -43,6 +47,8 @@ export default class GameCtrl extends cc.Component {
     private moveScoreDistance: number = 30;
     @property
     private moveScoreSpeed: number = 300;
+    @property
+    private bkgSpeed: number = 5;
 
     @property(cc.Node)
     blocker: cc.Node = null;
@@ -64,6 +70,13 @@ export default class GameCtrl extends cc.Component {
         this.startPositionX = -(this.screenWidth / 2) + (this.screenWidth / 5);
         this.heightColumn = this.columns.heightColumn;
         this.startDistance = this.screenWidth / 2 + this.startPositionX;
+
+        this.background1.width = this.screenHeight * (this.background1.width / this.background1.height);
+        this.background1.height = this.screenHeight;
+        this.background2.width = this.screenHeight * (this.background2.width / this.background2.height);
+        this.background2.height = this.screenHeight;
+        this.background1.setPosition(cc.v2(0, this.screenHeight/2));
+        this.background2.setPosition(cc.v2(this.background1.width, this.screenHeight/2));
 
         this.blocker.width = this.screenWidth;
         this.blocker.height = this.screenHeight;
@@ -99,7 +112,8 @@ export default class GameCtrl extends cc.Component {
         this.bestScoreLabel.string = this.retry.getBestScore().toString();
         this.gameOver = false;
 
-        this.camera.background.setPosition(cc.v2(0, 0));
+        this.background1.setPosition(cc.v2(0, this.screenHeight/2));
+        this.background2.setPosition(cc.v2(this.background1.width, this.screenHeight/2));
     }
 
     onTouchUp(event) {
@@ -173,6 +187,31 @@ export default class GameCtrl extends cc.Component {
                 this.perfectLabel.active = false;
             })
             .start();
+    }
+
+    moveBackground(distance: number, moveSpeed: number){
+        /*if(this.background1.x + this.background1.width < this.camera.getCamera().x - this.screenWidth/2)
+            this.background1.x += this.background1.width * 2;
+
+        if(this.background2.x + this.background2.width < this.camera.getCamera().x - this.screenWidth/2)
+            this.background2.x += this.background2.width * 2;
+
+        cc.tween(this.background1)
+            .to(distance/moveSpeed, { x: this.screenWidth/this.bkgSpeed }, { easing: 'linear' }) 
+            .start();*/
+        if(this.background1.x <= -this.background1.width)
+            this.background1.x = this.background2.x + this.background1.width;
+    
+        if(this.background2.x <= -this.background2.width)
+            this.background2.x = this.background1.x + this.background2.width;
+        
+        cc.tween(this.background1)
+            .to(distance/moveSpeed, { x: this.background1.x-distance/this.bkgSpeed }, { easing: 'linear' }) 
+            .start();
+
+        cc.tween(this.background2)
+            .to(distance/moveSpeed, { x: this.background2.x-distance/this.bkgSpeed }, { easing: 'linear' }) 
+            .start();   
     }
     
     getStartPositionX(): number{

@@ -2,6 +2,7 @@ import GameManager from "./GameManager";
 import type GameCtrl from "./GameCtrl";
 
 const {ccclass, property} = cc._decorator;
+const STECK_SPEED_CONTROL: number = 500;
 
 @ccclass 
 export default class Sticks extends cc.Component {
@@ -17,12 +18,12 @@ export default class Sticks extends cc.Component {
     @property
     public growSpeed: number = 500;
     @property
-    public fallSpeed: number = 1500; 
+    public fallSpeed: number = 900; 
 
     private ctrl: GameCtrl;
     private startPositionX: number;
 
-    private firstStickHeight: number = 0;
+    //private firstStickHeight: number = 0;
     private lastStickHeight: number = 0;
 
     onLoad() {
@@ -64,9 +65,9 @@ export default class Sticks extends cc.Component {
         newStick.addComponent(cc.Graphics);
         this.drawStick(newStick, 0);
 
-        if(this.sticks.length == 2){
-            const preLastStick = this.sticks.shift();
-            preLastStick.destroy();
+        if(this.sticks.length == 5){
+            const oldStick = this.sticks.shift();
+            oldStick.destroy();
         }
 
         this.node.addChild(newStick);
@@ -79,7 +80,7 @@ export default class Sticks extends cc.Component {
         graphic.rect(-this.stickWidth, 0, this.stickWidth, height);
         graphic.fill();
 
-        this.firstStickHeight = this.lastStickHeight;
+        //this.firstStickHeight = this.lastStickHeight;
         this.lastStickHeight = height;
     }
 
@@ -90,14 +91,14 @@ export default class Sticks extends cc.Component {
     
     fall(stick: cc.Node) {
         cc.tween(stick)
-            .to(this.ctrl.screenWidth/this.fallSpeed, { angle: -90 }, { easing: 'quadIn' })
+            .to(STECK_SPEED_CONTROL/this.fallSpeed, { angle: -90 }, { easing: 'quadIn' })
             .call(() => this.ctrl.onFallStickFinished()) 
             .start();
     }
 
     fallDown(stick: cc.Node) {
         cc.tween(stick)
-            .to(this.ctrl.screenWidth/this.fallSpeed, { angle: -180 }, { easing: 'quadIn' })
+            .to(STECK_SPEED_CONTROL/this.fallSpeed, { angle: -180 }, { easing: 'quadIn' })
             .call(() => this.ctrl.onFallDownStickFinished())
             .start();
     }

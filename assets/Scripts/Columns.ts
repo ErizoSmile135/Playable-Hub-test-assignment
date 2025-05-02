@@ -101,7 +101,7 @@ export default class Columns extends cc.Component {
 
     spawnNextColumn() {
         const nextColumn = this.spawnColumn();
-        const positionX = this.columns[1].x + this.columns[1].width + this.startDistance;
+        const positionX = this.columns[this.columns.length - 1].x + this.columns[this.columns.length - 1].width + this.startDistance;
         nextColumn.setPosition(cc.v2(positionX, -this.screenHeight/2));
         this.node.addChild(nextColumn);
         this.columns.push(nextColumn);
@@ -109,9 +109,9 @@ export default class Columns extends cc.Component {
 
     move(): cc.Node[] {
         this.spawnNextColumn();
-        const firstColumn = this.columns.shift();
-        const secondColumn = this.columns[0];
-        const thirdColumn = this.columns[1];
+        const firstColumn = this.columns[this.columns.length - 3];
+        const secondColumn = this.columns[this.columns.length - 2];
+        const thirdColumn = this.columns[this.columns.length - 1];
         const targetX = secondColumn.x + secondColumn.width + this.screenWidth/2 - this.startDistance;
     
         thirdColumn.setPosition(cc.v2(targetX + this.screenWidth, -this.screenHeight/2))
@@ -123,8 +123,13 @@ export default class Columns extends cc.Component {
         cc.tween(thirdColumn)
             .to(moveDistance/this.ctrl.camera.moveSpeed, { x: thirdColumnPosition  }, { easing: 'linear' })
             .call(() => this.ctrl.onMoveColumnFinished())
-            .call(() => firstColumn.destroy())
+            //.call(() => firstColumn.destroy())
             .start();
+
+        if(this.columns.length == 6){
+            const oldStick = this.columns.shift();
+            oldStick.destroy();
+        }
 
         const tempCol: cc.Node[] = [];
         tempCol.push(firstColumn, secondColumn);
@@ -136,19 +141,19 @@ export default class Columns extends cc.Component {
     }
 
     getFirstColumnPosition(): number{
-        return this.columns[0].x;
+        return this.columns[this.columns.length - 2].x;
     }
     
     getFirstColumnWidth(): number{
-        return this.columns[0].width;
+        return this.columns[this.columns.length - 2].width;
     }
 
     getSecondColumnPosition(): number{
-        return this.columns[1].x;
+        return this.columns[this.columns.length - 1].x;
     }
     
     getSecondColumnWidth(): number{
-        return this.columns[1].width;
+        return this.columns[this.columns.length - 1].width;
     }
 }
 

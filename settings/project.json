@@ -1,9 +1,10 @@
 {
   "start-scene": "87983084-c105-4cb6-9bb6-989b8daf3e63",
   "group-list": [
-    "default",
+    "background",
     "ui",
-    "game"
+    "game",
+    "default"
   ],
   "last-module-event-record-time": 1746021955092,
   "collision-matrix": [
@@ -16,6 +17,12 @@
       true
     ],
     [
+      false,
+      false,
+      true
+    ],
+    [
+      false,
       false,
       false,
       true

@@ -6,8 +6,8 @@ const {ccclass, property} = cc._decorator;
 @ccclass
 export default class Camera extends cc.Component {
 
-    @property (cc.Node)
-    public background: cc.Node = null;
+    /*@property (cc.Node)
+    public background: cc.Node = null;*/
 
     @property
     public moveSpeed: number = 2300;
@@ -19,7 +19,7 @@ export default class Camera extends cc.Component {
 
     start() {
         GameManager.onReady(this.handleGameCtrlReady.bind(this));
-        this.background.setPosition(cc.v2(0, 0));
+        //this.background.setPosition(cc.v2(0, 0));
     }
 
     handleGameCtrlReady() {
@@ -57,10 +57,14 @@ export default class Camera extends cc.Component {
             .to(startPositionDistance/this.moveSpeed, { x: targetX }, { easing: 'linear' })
             .start();
 
-        cc.tween(this.background)
+        /*cc.tween(this.background)
             .to(startPositionDistance/this.moveSpeed, { x: targetX }, { easing: 'linear' })
-            .start();
+            .start();*/
 
+    }
+
+    getCamera(): cc.Node{
+        return this.node;
     }
 
 }

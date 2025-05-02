@@ -59,6 +59,8 @@ export default class Player extends cc.Component {
                 this.ctrl.onMovePlayerFinished();
             })
             .start();
+
+        this.ctrl.moveBackground(distance, this.moveSpeed);
     }
 
     fall() {
