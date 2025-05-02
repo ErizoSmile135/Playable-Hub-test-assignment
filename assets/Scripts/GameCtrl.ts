@@ -65,6 +65,11 @@ export default class GameCtrl extends cc.Component {
         this.heightColumn = this.columns.heightColumn;
         this.startDistance = this.screenWidth / 2 + this.startPositionX;
 
+        this.blocker.width = this.screenWidth;
+        this.blocker.height = this.screenHeight;
+        this.node.width = this.screenWidth;
+        this.node.height = this.screenHeight;
+
         this.node.on(cc.Node.EventType.TOUCH_START, this.onTouchUp, this);
         this.node.on(cc.Node.EventType.TOUCH_END, this.onTouchDown, this);
         this.node.on(cc.Node.EventType.TOUCH_CANCEL, this.onTouchDown, this);

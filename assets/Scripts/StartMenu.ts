@@ -12,14 +12,16 @@ export default class StartMenu extends cc.Component {
     private ctrl: GameCtrl;
 
     start() {
-        this.blocker.active = true;
         GameManager.onReady(this.handleGameCtrlReady.bind(this));
+        this.blocker.active = true;
     }
 
     handleGameCtrlReady() {
         this.ctrl = GameManager.gameCtrl;
         this.ctrl.bestScoreLabel.string = "";
         this.ctrl.scoreLabel.string = "";
+        this.blocker.width = this.ctrl.screenWidth;
+        this.blocker.height = this.ctrl.screenHeight;
     }
     
     onDestroy() {

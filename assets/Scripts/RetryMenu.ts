@@ -17,13 +17,15 @@ export default class RetryMenu extends cc.Component {
     private ctrl: GameCtrl;
 
     start() {
+        GameManager.onReady(this.handleGameCtrlReady.bind(this));
         this.blocker.active = true;
         this.node.active = false;
-        GameManager.onReady(this.handleGameCtrlReady.bind(this));
     }
 
     handleGameCtrlReady() {
         this.ctrl = GameManager.gameCtrl;
+        this.blocker.width = this.ctrl.screenWidth;
+        this.blocker.height = this.ctrl.screenHeight;
     }
     
     onDestroy() {
